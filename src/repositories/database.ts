@@ -8,14 +8,14 @@ const TABLES_CREATE_QUERIES = [
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         email TEXT,
-        data_birth TEXT,
+        data_birth DATE,
         consultant_code TEXT UNIQUE,
         accumulated_points INTEGER,
-        entry_date TEXT,
+        entry_date DATE,
         total_sales REAL,
         total_commission REAL,
         status TEXT,
-        last_activity_date TEXT,
+        last_activity_date DATE,
         street_address TEXT,
         cep TEXT,
         neighborhood TEXT,
@@ -31,18 +31,46 @@ const TABLES_CREATE_QUERIES = [
         name TEXT,
         description TEXT,
         price REAL,
-        points INTEGER
+        points INTEGER,
+        image TEXT
     )`,
     `CREATE TABLE IF NOT EXISTS order_product (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         request TEXT,
-        consultant TEXT,
-        product TEXT,
+        consultant_code TEXT,
+        product_code TEXT,
         quantity INTEGER,
         commission REAL,
         total_amount REAL,
-        total_points INTEGER
-    )`
+        total_points INTEGER,
+        FOREIGN KEY (consultant_code) REFERENCES Consultant(consultant_code),
+        FOREIGN KEY (product_code) REFERENCES Product(product_code)
+    )`,
+    `CREATE TABLE IF NOT EXISTS order (
+        order_number TEXT PRIMARY KEY,
+        request TEXT,
+        consultant_code TEXT,
+        order_date DATE,
+        total_amount REAL,
+        total_points INTEGER,
+        captacao TEXT,
+        FOREIGN KEY (consultant_code) REFERENCES Consultant(consultant_code)
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS cycle (
+        cycle_number INTEGER PRIMARY KEY,
+        start_date DATE,
+        end_date DATE
+    )`,
+    `CREATE TABLE IF NOT EXISTS User (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    email TEXT,
+    password TEXT,
+    role TEXT,
+    referralCode TEXT,
+    referrerCode TEXT
+    )`,
 ];
 
 const database = new sqlite3.Database(DBSOURCE, (err) => {

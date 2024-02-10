@@ -25,16 +25,17 @@ app.get('/', (req, res) => {
     res.send('Bem-vindo! Servidor Express com Nodemon ')
 })
 // Cors
-//app.use(cors({
-   // origin: ['http://localhost:3000']
-//}))
+// Middlewares
+app.use(cors({
+    origin: ['http://localhost:3000']
+}))
 
 // Rota para exibir o formulário de criação de produto
 
 app.get('/create_product', (req, res) => {
     // Renderiza o arquivo de modelo EJS para exibir o formulário de criação de produto
     res.render('create_product'); // Remova o ./src/views e mantenha apenas 'create_product'
-    console.log(__dirname);
+    //console.log(__dirname);
 })
 
 // Rota para criar um novo produto
@@ -69,13 +70,13 @@ app.post('/create_product', [
 app.get('/create_consultant', (req, res) => {
     // Renderiza o arquivo de modelo EJS para exibir o formulário de criação de produto
     res.render('create_consultant'); // Remova o ./src/views e mantenha apenas 'create_product'
-    console.log(__dirname);
+    console.log(`Servidor rodando com sucesso ${HOSTNAME}:${PORT}/create_consultant`)
 })
 // Rota para criar um novo consultor
 app.post('/create_consultant', [
     body('name').notEmpty().isString(),
     body('email').notEmpty().isString(),
-    body('data_birth').notEmpty().isDate(),
+    body('data_birth').notEmpty().isString(),
     body('street_address').notEmpty().isString(),
     body('cep').notEmpty().isNumeric(),
     body('neighborhood').notEmpty().isString(),
@@ -87,6 +88,7 @@ app.post('/create_consultant', [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
+        
     }
 
     try {
@@ -105,17 +107,48 @@ app.post('/create_consultant', [
 })
 
 
+app.put('/update_consultant/', [
+    body('name').notEmpty().isString(),
+    body('email').notEmpty().isString().isEmail(),
+    body('data_birth').notEmpty().isString(), // Ajuste conforme necessário
+    body('street_address').notEmpty().isString(),
+    body('cep').notEmpty().isNumeric(),
+    body('neighborhood').notEmpty().isString(),
+    body('phone_number').notEmpty().isNumeric(),
+    body('cpf').notEmpty().isNumeric(),
+], async (req: Request<{ id: string }, {}, Consultant>, res: Response) => {
+    // Verifica se houve erros de validação
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const consultantId = parseInt(req.params.id, 10);
+
+    try {
+        // Atualiza o consultor com os dados do corpo da requisição
+        await consultantRepository.atualizar(consultantId, req.body, (notFound: boolean) => {
+            if (notFound) {
+                return res.status(404).json({ error: 'Consultor não encontrado' });
+            } else {
+                return res.status(200).json({ message: 'Consultor atualizado com sucesso!' });
+            }
+        });
+    } catch (error) {
+        console.error('Erro ao atualizar o consultor:', error);
+        return res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+})
+
+
 // Rotas
 app.use('/api', productRouter)
-// Resposta padrão para quaisquer outras requisições:
-app.use((req, res) => {
-    res.status(404)
-})
 app.use('/api', consultantRouter)
 // Resposta padrão para quaisquer outras requisições:
 app.use((req, res) => {
-    res.status(404)
+    res.status(404).send('Endpoint não encontrado')
 })
+
 // Inicia o sevidor
 
 // Porta do servidor

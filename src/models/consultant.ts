@@ -1,4 +1,5 @@
 type Consultant = {
+    id?:number
     name: string
     email: string
     data_birth: string // Ou Date, dependendo do formato esperado

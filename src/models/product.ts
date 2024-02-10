@@ -5,5 +5,6 @@ type Product = {
     description: string
     price: number
     points: number
+    image: string
 }
 export default Product

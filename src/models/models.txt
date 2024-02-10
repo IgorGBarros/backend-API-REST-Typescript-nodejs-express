@@ -1,55 +1,81 @@
-type Consultant = {
-    name: string
-    email: string
-    data_birth: string // Ou Date, dependendo do formato esperado
-    consultant_code: string
-    accumulated_points: number
-    entry_date: string// Ou Date, dependendo do formato esperado
-    total_sales: number
-    total_commission: number
-    status: 'Ativa' | 'Inativa 1' | 'Inativa 2' | 'Inativa 3' | 'Inativa 4' | 'Inativa 5' | 'Inativa 6'
-    last_activity_date: string // Ou Date, dependendo do formato esperado
-    street_address: string
-    cep: string
-    neighborhood: string
-    state: string
-    phone_number: string
-    cpf: string
-    level: 'Semente' | 'Bronze' | 'Prata' | 'Ouro' | 'Diamante'
-    digital_space_link: string
-};
-
-export default Consultant
-
-type Product = {
-    id?: number
-    product_code: string
-    name: string
-    description: string
-    price: number
-    points: number
+// models/Product.ts
+export interface Product {
+    product_code: string;
+    name: string;
+    description: string;
+    price: number;
+    points: number;
+    image: string;
 }
-export default Product
 
-type OrderProduct = {
-    request: string
-    consultant: string
-    product: string
-    quantity: number
-    commission : number
-    total_amount : number
-    total_points : number
+// models/File.ts
+export interface File {
+    file: string;
 }
-export default OrderProduct
 
-type Order = {
-
-    order_number: number
-    request: string
-    consultant : string
-    order_date : string
-    total_amount: number
-    total_points: number
-    captacao :'Presencial'| 'Web'
+// models/Consultant.ts
+export interface Consultant {
+    name: string;
+    email: string;
+    data_birth: Date;
+    consultant_code: string;
+    accumulated_points: number;
+    entry_date: Date;
+    total_sales: number;
+    total_commission: number;
+    status: string;
+    last_activity_date: Date;
+    street_address: string;
+    cep: string;
+    neighborhood: string;
+    state: string;
+    phone_number: string;
+    cpf: string;
+    level: string;
+    digital_space_link: string;
 }
-export default Order
+
+// models/OrderProduct.ts
+export interface OrderProduct {
+    request: string;
+    consultant: Consultant;
+    product: Product;
+    quantity: number;
+    commission: number;
+    total_amount: number;
+    total_points: number;
+}
+
+// models/Order.ts
+export interface Order {
+    order_number: string;
+    request: OrderProduct;
+    consultant: Consultant;
+    order_date: Date;
+    total_amount: number;
+    total_points: number;
+    captacao: string;
+}
+
+// models/Cycle.ts
+export interface Cycle {
+    cycle_number: number;
+    start_date: Date;
+    end_date: Date;
+}
+
+
+
+// models/User.js
+export default class User {
+    constructor(id, username, email, password, role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role; // Pode ser 'admin', 'distributor', 'customer', etc.
+        this.referralCode = ''; // Código de referência para o marketing multinível
+        this.referrerCode = ''; // Código do usuário que indicou este usuário
+    }
+}
+

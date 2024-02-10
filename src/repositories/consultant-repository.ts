@@ -11,23 +11,26 @@ const generateConsultantCode = (): string => {
     return result
 }
 
+
 const consultantRepository = {
     create: (consultant: Consultant, callback: (id?: number) => void) => {
+        
+        
         const sql = 'INSERT INTO consultant(consultant_code, name, email, data_birth, street_address,cep,neighborhood,phone_number,cpf) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
         const params = [
             generateConsultantCode(), 
             consultant.name, 
             consultant.email, 
-            consultant.data_birth, 
+            consultant.data_birth,  // Usando a data formatada aqui
             consultant.street_address,
             consultant.cep,
             consultant.neighborhood,
             consultant.phone_number,
             consultant.cpf,
-            
         ]
         database.run(sql, params, function(err) {
             if (err) {
+                
                 console.error('Erro ao inserir consultora:', err);
                 return callback(); // Chame o callback sem passar um ID para indicar falha
             }
