@@ -1,0 +1,23 @@
+<!-- views/create_product.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Produto</title>
+</head>
+<body>
+    <h1>Criar Produto</h1>
+    <form action="/create_product" method="POST">
+        <label for="name">Nome do Produto:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="description">Descrição:</label><br>
+        <textarea id="description" name="description" required></textarea><br><br>
+        <label for="price">Preço:</label><br>
+        <input type="number" id="price" name="price" required><br><br>
+        <label for="points">Pontos:</label><br>
+        <input type="number" id="points" name="points" required><br><br>
+        <button type="submit">Criar Produto</button>
+    </form>
+</body>
+</html>
