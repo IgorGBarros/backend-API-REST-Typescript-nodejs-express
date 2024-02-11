@@ -35,8 +35,7 @@ const TABLES_CREATE_QUERIES = [
         image TEXT
     )`,
     `CREATE TABLE IF NOT EXISTS order_product (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        request TEXT,
+        request TEXT PRIMARY KEY UNIQUE,
         consultant_code TEXT,
         product_code TEXT,
         quantity INTEGER,
@@ -46,7 +45,7 @@ const TABLES_CREATE_QUERIES = [
         FOREIGN KEY (consultant_code) REFERENCES Consultant(consultant_code),
         FOREIGN KEY (product_code) REFERENCES Product(product_code)
     )`,
-    `CREATE TABLE IF NOT EXISTS order (
+    `CREATE TABLE IF NOT EXISTS purchase_order (
         order_number TEXT PRIMARY KEY,
         request TEXT,
         consultant_code TEXT,

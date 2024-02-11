@@ -3,12 +3,14 @@ import Consultant from '../models/consultant'
 import consultantRepository from '../repositories/consultant-repository'
 
 
+
 const consultantRouter = express.Router()
 consultantRouter.post('/consultant', (req, res) => {
     const consultant: Consultant = req.body
     consultantRepository.create(consultant, (id) => {
         if (id) {
             res.status(201).location(`/consultant/${id}`).send()
+           
         } else {
             res.status(400).send()
         }
@@ -17,14 +19,16 @@ consultantRouter.post('/consultant', (req, res) => {
 }),
 consultantRouter.get('/consultant', (req, res) => {
     //res.send('Lê todos os itens')
-    consultantRepository.lerTodos((consultant) => res.json(consultant))
-    
+    consultantRepository.lerTodos((consultant) => res.json(consultant))   
 }),
+
+
 consultantRouter.get('/consultant/:id', (req, res) => {
     const id: number = +req.params.id
     consultantRepository.ler(id, (consultant) => {
         if (consultant) {
             res.json(consultant)
+            
         } else {
             res.status(404).send()
         }

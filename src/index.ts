@@ -67,11 +67,20 @@ app.post('/create_product', [
     }
 })
 
+
+app.get('/list_consultant', (req, res) => {
+    consultantRepository.lerTodos((Consultant) => {
+        // Renderize o arquivo EJS passando os dados dos consultores
+        res.render('consultants', { consultants: Consultant })
+    })
+})
+
+
 app.get('/create_consultant', (req, res) => {
     // Renderiza o arquivo de modelo EJS para exibir o formulário de criação de produto
-    res.render('create_consultant'); // Remova o ./src/views e mantenha apenas 'create_product'
+    res.render('create_consultant') // Remova o ./src/views e mantenha apenas 'create_product'
     console.log(`Servidor rodando com sucesso ${HOSTNAME}:${PORT}/create_consultant`)
-})
+}),
 // Rota para criar um novo consultor
 app.post('/create_consultant', [
     body('name').notEmpty().isString(),

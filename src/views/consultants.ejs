@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Consultores</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+           
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Consultores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Data de Nascimento</th>
+                <th>Código do Consultor</th>
+                <!-- Adicione mais cabeçalhos conforme necessário -->
+            </tr>
+        </thead>
+        <tbody>
+            <% consultants.forEach(consultant => { %>
+                <tr>
+                    <td><%= consultant.name %></td>
+                    <td><%= consultant.email %></td>
+                    <td><%= consultant.data_birth %></td>
+                    <td><%= consultant.consultant_code %></td>
+                    <!-- Adicione mais colunas conforme necessário -->
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>
