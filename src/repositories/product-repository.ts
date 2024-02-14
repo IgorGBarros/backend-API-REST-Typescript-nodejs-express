@@ -1,5 +1,5 @@
 import Product from "../models/product";
-import database from "./database";
+import database from "../config/database";
 
 const generateProductCode = (): string => {
     const length = 6

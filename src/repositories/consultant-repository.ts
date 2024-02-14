@@ -1,5 +1,5 @@
 import Consultant from "../models/consultant";
-import database from "./database";
+import database from "../config/database";
 
 const generateConsultantCode = (): string => {
     const length = 10

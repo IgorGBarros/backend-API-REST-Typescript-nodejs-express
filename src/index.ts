@@ -66,15 +66,37 @@ app.post('/create_product', [
         return res.status(500).json({ error: 'Erro interno do servidor' });
     }
 })
+app.get('/product', (req, res) => {
+    productRepository.lerTodos((Product) => {
+        // Renderize o arquivo EJS passando os dados dos consultores
+        res.render('products', { products: Product })
+    })
+})
 
-
-app.get('/list_consultant', (req, res) => {
+app.get('/consultant', (req, res) => {
     consultantRepository.lerTodos((Consultant) => {
         // Renderize o arquivo EJS passando os dados dos consultores
         res.render('consultants', { consultants: Consultant })
     })
 })
-
+/*app.get('/order_product', (req, res) => {
+    order_productRepository.lerTodos((Order_product) => {
+        // Renderize o arquivo EJS passando os dados dos consultores
+        res.render('order_products', { order_products: Order_product })
+    })
+})*/
+/*app.get('/purchase_order', (req, res) => {
+    purchase_orderRepository.lerTodos((Purchase_order) => {
+        // Renderize o arquivo EJS passando os dados dos consultores
+        res.render('purchase_orders', { purchase_orders: Purchase_order })
+    })
+})*/
+/*app.get('/cycle', (req, res) => {
+    purchase_orderRepository.lerTodos((Cycle) => {
+        // Renderize o arquivo EJS passando os dados dos consultores
+        res.render('cycles', { cycles: Purchase_order })
+    })
+})*/
 
 app.get('/create_consultant', (req, res) => {
     // Renderiza o arquivo de modelo EJS para exibir o formulário de criação de produto
@@ -116,7 +138,7 @@ app.post('/create_consultant', [
 })
 
 
-app.put('/update_consultant/', [
+app.put('/update_consultant', [
     body('name').notEmpty().isString(),
     body('email').notEmpty().isString().isEmail(),
     body('data_birth').notEmpty().isString(), // Ajuste conforme necessário
